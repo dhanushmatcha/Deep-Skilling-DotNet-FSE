@@ -1,0 +1,29 @@
+angular.json
+Contains Angular project configuration including build, serve and assets configuration.
+
+package.json
+Contains project metadata, dependencies and npm scripts.
+
+tsconfig.json
+Base TypeScript compiler configuration.
+
+tsconfig.app.json
+TypeScript configuration specific to the Angular application.
+
+src/main.ts
+Entry point of the Angular application. Bootstraps the root component.
+
+src/index.html
+Main HTML page where the Angular application is loaded.
+
+app.config.ts
+Contains providers and application-wide configuration for standalone Angular applications.
+
+app.component.ts
+Root component of the application.
+
+Angular Budgets
+maximumWarning and maximumError define bundle size limits during production builds. Angular warns when the warning threshold is exceeded and fails the build when the error threshold is exceeded.
+
+Compiled Application
+After running ng build, the compiled application code is generated inside the dist folder, mainly under browser/ as hashed JavaScript files.

@@ -1,0 +1,59 @@
+<div class="detail-container">
+  <div class="glass-card detail-card" *ngIf="course; else notFoundCourse">
+    <div class="header-row">
+      <span class="badge">Course Details</span>
+      <span class="course-code">{{ course.code }}</span>
+    </div>
+
+    <h1 class="course-title">{{ course.name | uppercase }}</h1>
+    <p class="course-id">Internal ID: #{{ course.id }}</p>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <label>Credits</label>
+        <p>{{ course.credits | creditLabel }}</p>
+      </div>
+
+      <div class="info-item">
+        <label>Grade Status</label>
+        <p class="status-tag" [class]="course.gradeStatus">{{ course.gradeStatus | titlecase }}</p>
+      </div>
+
+      <div class="info-item">
+        <label>Course Fee</label>
+        <p>{{ (course.fee || 299.99) | currency:'USD':'symbol':'1.2-2' }}</p>
+      </div>
+
+      <div class="info-item">
+        <label>Creation Date</label>
+        <p>{{ (course.createdDate || '2026-01-15') | date:'mediumDate' }}</p>
+      </div>
+    </div>
+
+    <!-- Task 2: Enrolled students loaded via switchMap -->
+    <div class="enrolled-students-panel">
+      <h3>Enrolled Students (RxJS switchMap Observable)</h3>
+      <ul *ngIf="enrolledStudents$ | async as students; else loadingStudents">
+        <li *ngFor="let s of students">🎓 {{ s }}</li>
+      </ul>
+      <ng-template #loadingStudents>
+        <p>Loading enrolled students...</p>
+      </ng-template>
+    </div>
+
+    <div class="action-footer">
+      <button class="btn-enroll" [class.btn-unenroll]="isEnrolled" (click)="toggleEnrollment()">
+        {{ isEnrolled ? 'Unenroll Course' : 'Enroll Now' }}
+      </button>
+      <a routerLink="/courses" class="btn-back">⬅ Back to Courses</a>
+    </div>
+  </div>
+
+  <ng-template #notFoundCourse>
+    <div class="glass-card not-found-card">
+      <h2>Course Not Found</h2>
+      <p>No course matching ID #{{ courseId }} was found in the system catalog.</p>
+      <a routerLink="/courses" class="btn-back">⬅ Back to Course Catalog</a>
+    </div>
+  </ng-template>
+</div>

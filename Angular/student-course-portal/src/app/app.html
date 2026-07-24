@@ -1,0 +1,28 @@
+<div class="portal-container">
+  <!-- Task 3: Global Loading Interceptor Overlay bound via async pipe -->
+  <div class="global-loading-overlay" *ngIf="loadingService.loading$ | async">
+    <div class="spinner-bar"></div>
+  </div>
+
+  <header class="navbar">
+    <div class="logo">
+      <span class="logo-icon">🎓</span>
+      <span class="logo-text">{{ title() }}</span>
+    </div>
+    <nav class="nav-links">
+      <a routerLink="/home" routerLinkActive="active" class="nav-link">Home</a>
+      <a routerLink="/courses" routerLinkActive="active" class="nav-link">Courses</a>
+      <a routerLink="/enroll" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">Enroll (TD)</a>
+      <a routerLink="/enroll/reactive" routerLinkActive="active" class="nav-link">Enroll (Reactive)</a>
+      <a routerLink="/profile" routerLinkActive="active" class="nav-link">Profile</a>
+    </nav>
+  </header>
+
+  <main class="content-area">
+    <router-outlet />
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Student Course Portal | Cognizant Digital Nurture 5.0 Hands-On 8</p>
+  </footer>
+</div>

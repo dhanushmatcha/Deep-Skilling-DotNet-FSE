@@ -1,0 +1,55 @@
+<div class="home-container">
+  <app-course-summary-widget></app-course-summary-widget>
+
+  <div class="glass-card hero-card">
+    <div class="badge">Cognizant Digital Nurture 5.0</div>
+    <h1 class="hero-title">Welcome to {{ portalName }}</h1>
+    <p class="hero-subtitle">
+      Explore {{ (totalCourseCount$ | async) || 0 }} active course tracks powered by HttpClient, RxJS Observables, & HTTP Interceptors.
+    </p>
+
+    <!-- Search Input -->
+    <div class="search-box">
+      <label for="courseSearch" class="search-label">Search Portal Courses:</label>
+      <input
+        id="courseSearch"
+        type="text"
+        class="form-control"
+        placeholder="Type a course name or code..."
+        [(ngModel)]="searchTerm"
+      />
+      <div class="search-output">
+        <span>Searching for: <strong>{{ searchTerm }}</strong></span>
+      </div>
+    </div>
+
+    <!-- Action Group -->
+    <div class="action-group">
+      <button
+        class="btn-enroll"
+        [disabled]="!isPortalActive"
+        (click)="onEnrollClick()"
+      >
+        Enroll Now
+      </button>
+      <button class="btn-secondary" (click)="isPortalActive = !isPortalActive">
+        Toggle Portal Status (Active: {{ isPortalActive }})
+      </button>
+    </div>
+
+    <div *ngIf="message" class="alert-message">
+      {{ message }}
+    </div>
+  </div>
+
+  <!-- Featured Course Section -->
+  <div class="featured-section" *ngIf="featuredCourse$ | async as featuredCourse">
+    <div class="section-header">
+      <h2>Featured Course Demo</h2>
+      <button class="btn-small" (click)="updateFeaturedCourseCredits()">
+        Update Credits (Triggers HTTP PUT)
+      </button>
+    </div>
+    <app-course-card [course]="featuredCourse"></app-course-card>
+  </div>
+</div>

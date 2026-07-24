@@ -1,0 +1,46 @@
+<div
+  class="card"
+  *ngIf="course"
+  [appHighlight]="'rgba(99, 102, 241, 0.2)'"
+  [ngClass]="cardClasses"
+  [ngStyle]="borderStyle"
+>
+  <div class="card-header">
+    <span class="course-code">{{ course.code }}</span>
+    <span class="course-id">ID: {{ course.id }}</span>
+  </div>
+
+  <div class="card-body">
+    <h3 class="course-name">{{ course.name | uppercase }}</h3>
+
+    <p class="course-credits">
+      Credits: <strong>{{ course.credits | creditLabel }}</strong>
+      <span class="raw-credits">(Raw count: {{ course.credits | number }})</span>
+    </p>
+
+    <div class="grade-status-container" [ngSwitch]="course.gradeStatus">
+      <span *ngSwitchCase="'passed'" class="status-badge passed">Passed (Green)</span>
+      <span *ngSwitchCase="'failed'" class="status-badge failed">Failed (Red)</span>
+      <span *ngSwitchDefault class="status-badge pending">Pending (Grey)</span>
+    </div>
+  </div>
+
+  <div class="expanded-details" *ngIf="isExpanded">
+    <p>Course Fee: <strong>{{ (course.fee || 299.99) | currency:'USD':'symbol':'1.2-2' }}</strong></p>
+    <p>Created Date: <strong>{{ (course.createdDate || '2026-01-15') | date:'mediumDate' }}</strong></p>
+  </div>
+
+  <div class="card-footer">
+    <!-- Task 3: Toggle Enroll / Unenroll -->
+    <button
+      class="btn-card-enroll"
+      [class.btn-unenroll]="isEnrolled"
+      (click)="onToggleEnrollment()"
+    >
+      {{ isEnrolled ? 'Unenroll' : 'Enroll' }}
+    </button>
+    <button class="btn-card-details" (click)="toggleDetails()">
+      {{ isExpanded ? 'Hide Details' : 'Show Details' }}
+    </button>
+  </div>
+</div>

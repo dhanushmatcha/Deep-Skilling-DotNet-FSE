@@ -1,0 +1,13 @@
+<div class="notification-widget">
+  <div class="widget-header">
+    <span class="icon">🔔</span>
+    <h4>Component-Scoped Notification Widget</h4>
+  </div>
+  <div class="widget-body">
+    <p class="instance-badge">{{ instanceInfo }}</p>
+    <p class="message-text">{{ activeMessage }}</p>
+  </div>
+  <div class="widget-footer">
+    <button class="btn-alert" (click)="sendAlert()">Trigger Notification</button>
+  </div>
+</div>

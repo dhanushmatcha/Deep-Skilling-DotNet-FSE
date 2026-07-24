@@ -1,0 +1,33 @@
+<div class="profile-container">
+  <div class="profile-card">
+    <div class="profile-header">
+      <div class="avatar">👨‍🎓</div>
+      <div>
+        <h2>Alex Student Profile</h2>
+        <p class="role-text">Enrolled Student | Cognizant Digital Nurture 5.0</p>
+      </div>
+    </div>
+
+    <!-- Task 1: Render Observable enrolledCourses$ via async pipe -->
+    <div class="enrolled-section" *ngIf="enrolledCourses$ | async as enrolledCourses">
+      <h3>My Enrolled Courses ({{ enrolledCourses.length }})</h3>
+
+      <div *ngIf="enrolledCourses.length > 0; else noEnrolledTemplate" class="enrolled-grid">
+        <app-course-card
+          *ngFor="let c of enrolledCourses"
+          [course]="c"
+          (enrollRequested)="onUnenroll($event)"
+        >
+        </app-course-card>
+      </div>
+
+      <ng-template #noEnrolledTemplate>
+        <div class="empty-enrollment">
+          <span class="empty-icon">📌</span>
+          <p>You have not enrolled in any courses yet.</p>
+          <small>Go to the Courses page to enroll in Angular tracks.</small>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

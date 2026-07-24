@@ -1,0 +1,12 @@
+<div class="summary-widget">
+  <div class="summary-content">
+    <span class="widget-icon">📊</span>
+    <div>
+      <h3>Total Available Courses</h3>
+      <p class="count-text">{{ (totalCourses$ | async) || 0 }} Courses Registered</p>
+    </div>
+  </div>
+  <button class="btn-add-summary" (click)="addNewCourse()">
+    + Add Course via NgRx Action
+  </button>
+</div>

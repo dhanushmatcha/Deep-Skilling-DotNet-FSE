@@ -1,0 +1,52 @@
+.notification-widget {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  margin-top: 1rem;
+}
+
+.widget-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.widget-header h4 {
+  font-size: 1rem;
+  color: var(--accent);
+}
+
+.instance-badge {
+  font-size: 0.8rem;
+  background: rgba(99, 102, 241, 0.15);
+  color: #a5b4fc;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.35rem;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+.message-text {
+  font-size: 0.9rem;
+  color: var(--text-main);
+}
+
+.widget-footer {
+  margin-top: 0.75rem;
+}
+
+.btn-alert {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  padding: 0.4rem 0.85rem;
+  border-radius: 0.35rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.btn-alert:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

@@ -1,0 +1,143 @@
+<div class="reactive-container">
+  <div class="glass-card form-card">
+    <div class="badge">Cognizant Digital Nurture 5.0</div>
+    <h2 class="form-title">Reactive Student Enrollment Form</h2>
+    <p class="form-subtitle">FormBuilder powered reactive form with custom & async validators and dynamic FormArray controls.</p>
+
+    <!-- Task 1: Success Alert -->
+    <div *ngIf="submitted" class="success-alert">
+      <span class="alert-icon">⚡</span>
+      <div class="alert-content">
+        <h4>Reactive Enrollment Submitted Successfully!</h4>
+        <p>Values captured via FormBuilder getRawValue().</p>
+      </div>
+    </div>
+
+    <!-- Task 1: Reactive Form Binding -->
+    <form [formGroup]="enrollForm" (ngSubmit)="onSubmit()" class="form-body" novalidate>
+
+      <!-- Field 1: Student Name -->
+      <div class="form-group">
+        <label for="reactiveName">Student Name <span class="required-star">*</span></label>
+        <input
+          type="text"
+          id="reactiveName"
+          formControlName="studentName"
+          class="form-control"
+          placeholder="Enter student name"
+        />
+        <div *ngIf="enrollForm.get('studentName')?.touched && enrollForm.get('studentName')?.invalid" class="error-feedback">
+          <small *ngIf="enrollForm.get('studentName')?.hasError('required')">Name is required</small>
+          <small *ngIf="enrollForm.get('studentName')?.hasError('minlength')">Name must be at least 3 characters</small>
+        </div>
+      </div>
+
+      <!-- Field 2: Student Email with Async Validator -->
+      <div class="form-group">
+        <label for="reactiveEmail">Student Email <span class="required-star">*</span></label>
+        <div class="input-wrapper">
+          <input
+            type="email"
+            id="reactiveEmail"
+            formControlName="studentEmail"
+            class="form-control"
+            placeholder="student@example.com"
+          />
+          <span *ngIf="enrollForm.get('studentEmail')?.pending" class="async-spinner" title="Validating email...">⏳</span>
+        </div>
+        <!-- Task 3: Async Validation Messages -->
+        <div *ngIf="enrollForm.get('studentEmail')?.touched && enrollForm.get('studentEmail')?.invalid" class="error-feedback">
+          <small *ngIf="enrollForm.get('studentEmail')?.hasError('required')">Email is required</small>
+          <small *ngIf="enrollForm.get('studentEmail')?.hasError('email')">Invalid email address</small>
+          <small *ngIf="enrollForm.get('studentEmail')?.hasError('emailTaken')">Email already exists</small>
+        </div>
+      </div>
+
+      <!-- Field 3: Course ID with Custom Validator -->
+      <div class="form-group">
+        <label for="reactiveCourseId">Course ID / Code <span class="required-star">*</span></label>
+        <input
+          type="text"
+          id="reactiveCourseId"
+          formControlName="courseId"
+          class="form-control"
+          placeholder="e.g. 101 or CS-ANG20 (Must NOT start with XX)"
+        />
+        <!-- Task 2: Custom Validation Messages -->
+        <div *ngIf="enrollForm.get('courseId')?.touched && enrollForm.get('courseId')?.invalid" class="error-feedback">
+          <small *ngIf="enrollForm.get('courseId')?.hasError('required')">Course ID is required</small>
+          <small *ngIf="enrollForm.get('courseId')?.hasError('noCourseCode')">Course code starting with XX is not allowed.</small>
+        </div>
+      </div>
+
+      <!-- Field 4: Preferred Semester -->
+      <div class="form-group">
+        <label for="reactiveSemester">Preferred Semester</label>
+        <select id="reactiveSemester" formControlName="preferredSemester" class="form-control">
+          <option value="Odd">Odd Semester</option>
+          <option value="Even">Even Semester</option>
+        </select>
+      </div>
+
+      <!-- Task 4: FormArray - Additional Courses -->
+      <div class="form-group form-array-section" formArrayName="additionalCourses">
+        <div class="array-header">
+          <label>Additional Courses</label>
+          <button type="button" class="btn-add-course" (click)="addCourse()">
+            + Add Another Course
+          </button>
+        </div>
+
+        <div *ngFor="let control of additionalCourses.controls; let i = index" class="array-item-row">
+          <input
+            type="text"
+            [formControlName]="i"
+            class="form-control"
+            placeholder="Additional Course Code #{{ i + 1 }}"
+          />
+          <button type="button" class="btn-remove-course" (click)="removeCourse(i)">
+            Remove
+          </button>
+        </div>
+        <div *ngIf="additionalCourses.touched && additionalCourses.invalid" class="error-feedback">
+          <small>All added additional courses are required.</small>
+        </div>
+      </div>
+
+      <!-- Field 5: Agree to Terms Checkbox -->
+      <div class="form-group checkbox-group">
+        <label class="checkbox-label">
+          <input type="checkbox" formControlName="agreeToTerms" />
+          <span>I agree to the Terms & Conditions <span class="required-star">*</span></span>
+        </label>
+        <div *ngIf="enrollForm.get('agreeToTerms')?.touched && enrollForm.get('agreeToTerms')?.invalid" class="error-feedback">
+          <small *ngIf="enrollForm.get('agreeToTerms')?.hasError('required')">You must accept the terms</small>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="form-actions">
+        <!-- Task 1: Disabled button when form is invalid -->
+        <button
+          type="submit"
+          class="btn-submit"
+          [disabled]="enrollForm.invalid"
+        >
+          Submit Reactive Form
+        </button>
+
+        <button type="button" class="btn-reset" (click)="onReset()">
+          Reset Form
+        </button>
+      </div>
+
+    </form>
+
+    <!-- Submitted Values View -->
+    <div *ngIf="submitted && lastSubmittedValues" class="submission-summary">
+      <h3>Captured Reactive Form Values (getRawValue)</h3>
+      <pre>{{ lastSubmittedValues | json }}</pre>
+    </div>
+
+  </div>
+</div>

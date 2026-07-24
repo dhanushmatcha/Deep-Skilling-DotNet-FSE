@@ -1,0 +1,53 @@
+<div class="course-list-container">
+  <app-course-summary-widget></app-course-summary-widget>
+
+  <div class="header-section">
+    <h2>Available Portal Courses</h2>
+    <p>Select a course card below to enroll into your desired Angular track.</p>
+  </div>
+
+  <div class="list-search-box">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Filter courses by name or code... (Updates URL ?search=...)"
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="onSearchChange()"
+    />
+    <span *ngIf="searchTerm" class="search-indicator">Filtering for: <strong>{{ searchTerm }}</strong></span>
+  </div>
+
+  <!-- Task: Loading indicator bound to NgRx Store isLoading$ selector -->
+  <div *ngIf="isLoading$ | async" class="loading-container">
+    <div class="spinner"></div>
+    <p class="loading-text">Loading courses from NgRx Store...</p>
+  </div>
+
+  <div *ngIf="!(isLoading$ | async)">
+    <div *ngIf="courses$ | async as courses">
+      <div *ngIf="courses.length > 0; else noCoursesTemplate" class="cards-grid">
+        <div *ngFor="let c of courses; trackBy: trackByCourseId" class="card-wrapper">
+          <app-course-card
+            [course]="c"
+            (enrollRequested)="onEnroll($event)"
+          >
+          </app-course-card>
+          <a [routerLink]="['/courses', c.id]" class="btn-view-details">🔍 View Course Details</a>
+        </div>
+      </div>
+
+      <ng-template #noCoursesTemplate>
+        <div class="no-courses-panel">
+          <span class="empty-icon">📂</span>
+          <h3>No courses available matching "{{ searchTerm }}".</h3>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+  <div class="selected-course-panel" *ngIf="!(isLoading$ | async)">
+    <h3>Selected course ID: <span class="highlight">{{ selectedCourseId !== null ? selectedCourseId : 'None' }}</span></h3>
+  </div>
+
+  <app-notification></app-notification>
+</div>

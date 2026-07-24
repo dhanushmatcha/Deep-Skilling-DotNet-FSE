@@ -1,0 +1,66 @@
+.profile-container {
+  padding: 1.5rem 0;
+}
+
+.profile-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  box-shadow: var(--shadow);
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1.5rem;
+}
+
+.avatar {
+  font-size: 3rem;
+  background: rgba(99, 102, 241, 0.15);
+  padding: 0.75rem;
+  border-radius: 50%;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.profile-header h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.role-text {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.enrolled-section h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1.25rem;
+  color: var(--accent);
+}
+
+.enrolled-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.empty-enrollment {
+  text-align: center;
+  padding: 3rem;
+  background: rgba(15, 23, 42, 0.4);
+  border: 2px dashed var(--border-color);
+  border-radius: 1rem;
+  color: var(--text-muted);
+}
+
+.empty-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}

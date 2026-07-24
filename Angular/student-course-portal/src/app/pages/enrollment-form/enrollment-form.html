@@ -1,0 +1,155 @@
+<div class="enrollment-container">
+  <div class="glass-card form-card">
+    <div class="badge">Cognizant Digital Nurture 5.0</div>
+    <h2 class="form-title">Student Course Enrollment Form</h2>
+    <p class="form-subtitle">Fill out the template-driven form below to enroll in your selected Angular module track.</p>
+
+    <!-- Task 4: Success Message Alert -->
+    <div *ngIf="submitted" class="success-alert">
+      <span class="alert-icon">🎉</span>
+      <div class="alert-content">
+        <h4>Enrollment request submitted successfully!</h4>
+        <p>Your details have been logged and verified by the system.</p>
+      </div>
+    </div>
+
+    <!-- Task 1: Template-Driven Form declaration -->
+    <form #enrollForm="ngForm" (ngSubmit)="onSubmit(enrollForm)" class="form-body" novalidate>
+
+      <!-- Field 1: Student Name -->
+      <div class="form-group">
+        <label for="studentName">Student Name <span class="required-star">*</span></label>
+        <input
+          type="text"
+          id="studentName"
+          name="studentName"
+          class="form-control"
+          placeholder="Enter your full name"
+          [(ngModel)]="formData.studentName"
+          #nameCtrl="ngModel"
+          required
+          minlength="3"
+        />
+        <!-- Task 2: Validation Messages -->
+        <div *ngIf="nameCtrl.touched && nameCtrl.invalid" class="error-feedback">
+          <small *ngIf="nameCtrl.errors?.['required']">Name is required</small>
+          <small *ngIf="nameCtrl.errors?.['minlength']">Name must be at least 3 characters</small>
+        </div>
+      </div>
+
+      <!-- Field 2: Student Email -->
+      <div class="form-group">
+        <label for="studentEmail">Student Email <span class="required-star">*</span></label>
+        <input
+          type="email"
+          id="studentEmail"
+          name="studentEmail"
+          class="form-control"
+          placeholder="student@example.com"
+          [(ngModel)]="formData.studentEmail"
+          #emailCtrl="ngModel"
+          required
+          email
+        />
+        <!-- Task 2: Validation Messages -->
+        <div *ngIf="emailCtrl.touched && emailCtrl.invalid" class="error-feedback">
+          <small *ngIf="emailCtrl.errors?.['required']">Email is required</small>
+          <small *ngIf="emailCtrl.errors?.['email']">Invalid email address</small>
+        </div>
+      </div>
+
+      <!-- Field 3: Course ID -->
+      <div class="form-group">
+        <label for="courseId">Course ID <span class="required-star">*</span></label>
+        <select
+          id="courseId"
+          name="courseId"
+          class="form-control"
+          [(ngModel)]="formData.courseId"
+          #courseCtrl="ngModel"
+          required
+        >
+          <option [ngValue]="null" disabled>-- Select Course --</option>
+          <option [ngValue]="101">101 - Angular Architecture & Signals</option>
+          <option [ngValue]="102">102 - TypeScript Advanced Patterns</option>
+          <option [ngValue]="103">103 - RxJS & State Management</option>
+          <option [ngValue]="104">104 - Angular Forms & Validations</option>
+          <option [ngValue]="105">105 - Micro-Frontends with Angular</option>
+        </select>
+        <!-- Task 2: Validation Message -->
+        <div *ngIf="courseCtrl.touched && courseCtrl.invalid" class="error-feedback">
+          <small *ngIf="courseCtrl.errors?.['required']">Course ID is required</small>
+        </div>
+      </div>
+
+      <!-- Field 4: Preferred Semester -->
+      <div class="form-group">
+        <label for="preferredSemester">Preferred Semester</label>
+        <select
+          id="preferredSemester"
+          name="preferredSemester"
+          class="form-control"
+          [(ngModel)]="formData.preferredSemester"
+          #semesterCtrl="ngModel"
+        >
+          <option value="Odd">Odd Semester</option>
+          <option value="Even">Even Semester</option>
+        </select>
+      </div>
+
+      <!-- Field 5: Agree to Terms Checkbox -->
+      <div class="form-group checkbox-group">
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            id="agreeToTerms"
+            name="agreeToTerms"
+            [(ngModel)]="formData.agreeToTerms"
+            #termsCtrl="ngModel"
+            required
+          />
+          <span>I agree to the Terms & Conditions <span class="required-star">*</span></span>
+        </label>
+        <!-- Task 2: Validation Message -->
+        <div *ngIf="termsCtrl.touched && termsCtrl.invalid" class="error-feedback">
+          <small *ngIf="termsCtrl.errors?.['required']">You must accept the terms</small>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="form-actions">
+        <!-- Task 1: Disabled button when form is invalid -->
+        <button
+          type="submit"
+          class="btn-submit"
+          [disabled]="enrollForm.invalid"
+        >
+          Submit Enrollment
+        </button>
+
+        <!-- Task 5: Reset Button using enrollForm.resetForm() -->
+        <button
+          type="button"
+          class="btn-reset"
+          (click)="onReset(enrollForm)"
+        >
+          Reset Form
+        </button>
+      </div>
+
+    </form>
+
+    <!-- Display Submitted Values Summary -->
+    <div *ngIf="submitted && lastSubmittedData" class="submission-summary">
+      <h3>Submitted Form Details</h3>
+      <ul>
+        <li><strong>Student Name:</strong> {{ lastSubmittedData.studentName }}</li>
+        <li><strong>Student Email:</strong> {{ lastSubmittedData.studentEmail }}</li>
+        <li><strong>Course ID:</strong> {{ lastSubmittedData.courseId }}</li>
+        <li><strong>Preferred Semester:</strong> {{ lastSubmittedData.preferredSemester }}</li>
+        <li><strong>Agreed to Terms:</strong> {{ lastSubmittedData.agreeToTerms ? 'Yes' : 'No' }}</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
